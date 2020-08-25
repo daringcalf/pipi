@@ -1,0 +1,45 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test
+  labels:
+    test: test
+spec:
+  terminationGracePeriodSeconds: 180
+  containers:
+  - name: test
+    image: simplestory:5000/docker:19.03.6-dind
+    command: ["dockerd-entrypoint.sh"]
+    args: ["--insecure-registry=simplestory:5000"]
+    resources:
+      requests:
+        memory: "4Gi"
+        cpu: "500m"
+      limits:
+        memory: "4Gi"
+        cpu: "1000m"
+    securityContext:
+      privileged: true
+  - name: jnlp
+    image: simplestory:5000/jenkins/inbound-agent:latest
+    volumeMounts:
+    - mountPath: /home/jenkins/.kube
+      name: dotkube
+    - mountPath: /usr/bin/kubectl
+      name: kubectl
+  - name: busybox
+    image: simplestory:5000/busybox:latest
+    command:
+    - sleep
+    - "1000000"
+  volumes:
+    - name: docker-sock
+      hostPath:
+        path: /var/run/docker.sock
+    - name: dotkube
+      hostPath:
+        path: /home/nobia/.kube
+    - name: kubectl
+      hostPath:
+        path: /usr/bin/kubectl
