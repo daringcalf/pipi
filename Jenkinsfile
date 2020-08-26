@@ -8,7 +8,7 @@ pipeline {
     }
   }
   stages {
-    stage('build docker image') {
+    stage('build sweb image') {
       steps {
         container('test') {
           sh 'echo "build number is ${BUILD_NUMBER}"'
@@ -19,7 +19,7 @@ pipeline {
         }
       }
     }
-    stage('deploy django pod') {
+    stage('roll sweb pods') {
       steps {
         container('jnlp') {
           // script {
@@ -32,9 +32,18 @@ pipeline {
           //   }
           // }
           // sh 'kubectl run django-test -n ss-take1 -l=app=django-test --image=simplestory:5000/djangotest:${BUILD_NUMBER} --port=8000'
-          sh 'echo "rolling..."'
+          sh 'echo "rolling deploy sweb ..."'
           sh 'kubectl set image deployment sweb sweb=simplestory:5000/sweb:${BUILD_NUMBER} -n simplestory'
           sh 'echo "sweb is using ${BUILD_NUMBER} now, remember to edit the yaml"'
+        }
+      }
+    }
+    stage('restart nginx container') {
+      steps {
+        container('jnlp') {
+          POD = sh ( kubectl get pod | grep nginx | awk '{print $1}' )
+          sh 'kubectl exec -it ${POD} -c nginx -- /bin/sh -c "kill 1"'
+          sh 'echo container nginx restarted'
         }
       }
     }
