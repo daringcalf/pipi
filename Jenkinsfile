@@ -48,7 +48,7 @@ pipeline {
       }
       steps {
         container('jnlp') {
-          sh 'kubectl exec -it ${POD} -c nginx -- /bin/sh -c "kill 1"'
+          sh 'kubectl exec -it -n simplestory ${POD} -c nginx -- /bin/sh -c "kill 1"'
           sh 'echo container nginx restarted'
         }
       }
