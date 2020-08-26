@@ -44,7 +44,6 @@ pipeline {
           POD = sh ( kubectl get pod | grep nginx | awk '{print $1}' )
           sh 'kubectl exec -it ${POD} -c nginx -- /bin/sh -c "kill 1"'
           sh 'echo container nginx restarted'
-
         }
       }
     }
