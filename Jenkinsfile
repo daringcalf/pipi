@@ -40,10 +40,11 @@ pipeline {
     }
     stage('restart nginx container') {
       environment {
-        POD = """${sh(
-                returnStdout: true,
-                script: 'kubectl get pod | grep nginx | awk \'{print $1}\''
-              )}""" 
+        // POD = """${sh(
+        //         returnStdout: true,
+        //         script: 'kubectl get pod | grep nginx | awk \'{print $1}\''
+        //       )}""" 
+        POD = "nginx-79c494b498-b7qqh"
       }
       steps {
         container('jnlp') {
