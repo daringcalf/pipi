@@ -31,9 +31,10 @@ pipeline {
           //     sh 'echo error in delete pod, nothing to worry'
           //   }
           // }
-          sh 'kubectl run django-test -n ss-take1 -l=app=django-test --image=simplestory:5000/djangotest:${BUILD_NUMBER} --port=8000'
+          // sh 'kubectl run django-test -n ss-take1 -l=app=django-test --image=simplestory:5000/djangotest:${BUILD_NUMBER} --port=8000'
+          sh 'echo "rolling..."'
           sh 'kubectl set image deployment sweb sweb=simplestory:5000/sweb:${BUILD_NUMBER} -n simplestory'
-          sh 'echo sweb is using ${BUILD_NUMBER} now, remember to edit the yaml'
+          sh 'echo "sweb is using ${BUILD_NUMBER} now, remember to edit the yaml"'
         }
       }
     }
