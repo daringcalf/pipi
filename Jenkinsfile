@@ -42,7 +42,7 @@ pipeline {
       steps {
         container('jnlp') {
           POD = sh (
-            script: 'kubectl get pod | grep nginx | awk \\'{print $1}\\'',
+            script: 'kubectl get pod | grep nginx | awk \'{print $1}\'',
             returnStdout: true
           ).trim()
           sh 'kubectl exec -it ${POD} -c nginx -- /bin/sh -c "kill 1"'
