@@ -12,24 +12,28 @@ pipeline {
       steps {
         container('test') {
           sh 'echo "build number is ${BUILD_NUMBER}"'
-          sh 'docker image build -t simplestory:5000/djangotest:${BUILD_NUMBER} ./django'
-          sh 'docker image push simplestory:5000/djangotest:${BUILD_NUMBER}'
+          // sh 'docker image build -t simplestory:5000/djangotest:${BUILD_NUMBER} ./django'
+          // sh 'docker image push simplestory:5000/djangotest:${BUILD_NUMBER}'
+          sh 'docker image build -t simplestory:5000/sweb:${BUILD_NUMBER} ./django'
+          sh 'docker image push simplestory:5000/sweb:${BUILD_NUMBER}'
         }
       }
     }
     stage('deploy django pod') {
       steps {
         container('jnlp') {
-          script {
-            try {
-              sh 'kubectl delete pod django-test -n ss-take1'
-            }
-            catch(all) {
-              sh 'echo error in delete pod, nothing to worry'
-            }
-          }
+          // script {
+          //   try {
+          //     // sh 'kubectl delete pod django-test -n ss-take1'
+          //     // sh 'kubectl delete pod sweb -n simplestory'
+          //   }
+          //   catch(all) {
+          //     sh 'echo error in delete pod, nothing to worry'
+          //   }
+          // }
           sh 'kubectl run django-test -n ss-take1 -l=app=django-test --image=simplestory:5000/djangotest:${BUILD_NUMBER} --port=8000'
-          sh 'echo done'
+          sh 'kubectl set image deployment sweb sweb=simplestory:5000/sweb:${BUILD_NUMBER} -n simplestory'
+          sh 'echo sweb is using ${BUILD_NUMBER} now, remember to edit the yaml'
         }
       }
     }

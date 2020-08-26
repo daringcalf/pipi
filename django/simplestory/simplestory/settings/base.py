@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+AUTH_USER_MODEL = 'siteusers.SiteUser'
+
 
 # Application definition
 
@@ -41,6 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'blog.apps.BlogConfig',
+    'taggit',
+    'siteusers',
+    'ssusers',
+    'crispy_forms',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -77,11 +84,12 @@ WSGI_APPLICATION = 'simplestory.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
 }
 
 
@@ -121,7 +129,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'https://static.simplestory.cyou'
+STATIC_ROOT = '/home/nobia/djangostatics'
 
 # write email to console
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -129,14 +138,21 @@ STATIC_URL = '/static/'
 # The SMTP server host; the default is localhost
 EMAIL_HOST = "smtp.qq.com"
 # The SMTP port; the default is 25
-EMAIL_PORT = 465 
+EMAIL_PORT = 587 
 # The username for the SMTP server
 EMAIL_HOST_USER = os.environ.get('EMIAL_USER')
 # The password for the SMTP server
+# qq mail password is the third party password
 EMAIL_HOST_PASSWORD = os.environ.get('EMIAL_PASSWORD')
 # Whether to use a Transport Layer Security (TLS) secure connection
 EMAIL_USE_TLS = True
 # Whether to use an implicit TLS secure connection
 # EMAIL_USE_SSL = True 
 
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+CORS_ORIGIN_ALLOW_ALL = True 
 

@@ -1,0 +1,66 @@
+{% extends "siteusers/base.html" %}
+{% load static %}
+
+{% block content %}
+<!--- profile -->
+<div class="container-fluid padding">
+    <div class="row welcome text-center">
+        <div class="col-12">
+            <h1 class="display-4">Profile</h1>
+        </div>
+        <hr>
+    </div>
+</div>
+
+<!--- Character Cards -->
+<div class="container-fluid padding">
+    <div class="row padding cardrow">
+        {% for character in characters %}
+        <div class="col-sm-4">
+            <div class="card">
+                {% if character.job < 200 %}
+                    <img class="card-img-top" src="{% static 'img/jobs/warrior.png' %}">
+                {% elif character.job < 300 %}
+                    <img class="card-img-top" src="{% static 'img/jobs/magician.png' %}">
+                {% elif character.job < 400 %}
+                    <img class="card-img-top" src="{% static 'img/jobs/bowman.png' %}">
+                {% elif character.job < 500 %}
+                    <img class="card-img-top" src="{% static 'img/jobs/thief.png' %}">
+                {% elif character.job < 600 %}
+                    <img class="card-img-top" src="{% static 'img/jobs/pirate.png' %}">
+                {% else %}
+                    <img class="card-img-top" src="{% static 'img/jobs/pirate.png' %}">
+                {% endif %}
+                <div class="card-body">
+                    <h4 class="card-title">{{ character.name }}</h4>
+                    <pre class="card-text">Rank {{ character.rank|rjust:"9" }}</pre>
+                    <pre class="card-text">Job Rank {{ character.rank|rjust:"5" }}</pre>
+                    <pre class="card-text">Level {{ character.level|rjust:"8" }}</pre>
+                    <pre class="card-text">Fame {{ character.fame|rjust:"9" }}</pre>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <hr class="my-4">
+</div>
+
+<!--- Server status -->
+<div class="container-fluid padding">
+    <div class="row padding">
+        <div class="col-sm-4 svrstat">
+            <h2>Server Status</h2>
+            <br>
+            <p>Total Players:</p>
+            <p>{{ accounts.count }}</p>
+            <p>Players Onliine:</p>
+            <p>{{ online_users.count }}</p>
+        </div>
+        <div class="col-sm-6">
+            <img src="{% static 'img/krsvr.jpg' %}" class="img-fluid">
+        </div>
+    </div>
+<hr class="my-4">
+</div>
+
+{% endblock content %}
