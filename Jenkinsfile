@@ -39,13 +39,13 @@ pipeline {
       }
     }
     stage('restart nginx container') {
+      environment {
+        POD = """${sh(
+                returnStdout: true,
+                script: 'kubectl get pod | grep nginx | awk \'{print $1}\''
+              )}""" 
+      }
       steps {
-        environment {
-          POD = """${sh(
-                  returnStdout: true,
-                  script: 'kubectl get pod | grep nginx | awk \'{print $1}\''
-                )}""" 
-        }
         container('jnlp') {
           sh 'kubectl exec -it ${POD} -c nginx -- /bin/sh -c "kill 1"'
           sh 'echo container nginx restarted'
