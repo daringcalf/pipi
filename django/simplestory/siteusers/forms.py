@@ -39,8 +39,8 @@ class SiteUserCreationForm(UserCreationForm):
         birthday=self.cleaned_data['birthday']
         #birthday=datetime.date(1970, 6, 4)
         ssaccount=Account(
-            pin='',
-            pic='',
+            pin='1234',
+            pic='123456',
             name=username,
             password=password,
             birthday=birthday,
