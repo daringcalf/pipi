@@ -76,7 +76,7 @@ class SiteUserAdminCreationForm(forms.ModelForm):
     copied and not used form
 
     """
-    username = forms.CharField(max_length=16)
+    username = forms.CharField(min_length=5, max_length=16)
     password1 = forms.CharField(min_length=6, max_length=12, label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(min_length=6, max_length=12, label='Password confirmation', widget=forms.PasswordInput)
 
