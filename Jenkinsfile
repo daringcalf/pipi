@@ -44,7 +44,7 @@ pipeline {
         //         returnStdout: true,
         //         script: 'kubectl get pod | grep nginx | awk \'{print $1}\''
         //       )}""" 
-        POD = "nginx-79c494b498-b7qqh"
+        POD = "nginx-79c494b498-mswzs"
       }
       steps {
         container('jnlp') {
