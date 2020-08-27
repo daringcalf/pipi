@@ -77,8 +77,8 @@ class SiteUserAdminCreationForm(forms.ModelForm):
 
     """
     username = forms.CharField(max_length=16)
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    password1 = forms.CharField(max_length=12，label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(max_length=12，label='Password confirmation', widget=forms.PasswordInput)
 
     class Meta:
         model = SiteUser
