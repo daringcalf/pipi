@@ -28,5 +28,5 @@ DATABASES = {
     },
 }
 
-STATIC_URL = 'https://static.simplestory.cyou:7529'
+STATIC_URL = 'https://static.simplestory.cyou:7529/'
 STATIC_ROOT = '/home/nobia/djangostatics'
