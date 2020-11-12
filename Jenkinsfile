@@ -48,6 +48,7 @@ pipeline {
       }
       steps {
         container('jnlp') {
+          // nginx reverse proxies to sweb service, after new sweb pods deployed, nginx pod needs a restart; otherwise it won't route the traffic
           sh 'kubectl exec -it -n simplestory ${POD} -c nginx -- /bin/sh -c "kill 1"'
           sh 'echo container nginx restarted'
         }
